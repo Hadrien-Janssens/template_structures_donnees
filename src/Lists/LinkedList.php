@@ -38,7 +38,10 @@ class LinkedList implements ListInterface
 
     public function remove(int $index): void {}
 
-    public function size(): int {}
+    public function size(): int
+    {
+        return $this->size;
+    }
 
     public function toArray(): array {}
 }
