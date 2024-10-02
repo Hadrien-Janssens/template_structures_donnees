@@ -32,6 +32,12 @@ class LinkedList implements ListInterface
             $this->head->setNext($newNode);
             $this->size++;
         } else {
+
+            //tester le typage 
+            if (gettype($this->head->getNext()->getElement()) !== gettype($element)) {
+                throw new \InvalidArgumentException;
+            }
+
             $node = $this->head->getNext();
 
             while ($node->getNext() !== null) {
@@ -44,6 +50,11 @@ class LinkedList implements ListInterface
 
     public function get(int $index): mixed
     {
+
+        if ($this->head->getNext() === null) {
+            throw new Exception();
+        }
+
         $i = 0;
         $node = $this->head->getNext();
 
@@ -77,14 +88,35 @@ class LinkedList implements ListInterface
         $this->size = 0;
     }
 
-    public function includes(mixed $element): bool {}
+    public function includes(mixed $element): bool
+    {
+        $node = $this->head;
 
-    public function isEmpty(): bool {}
+        while ($node->getNext() !== null) {
+            $node = $node->getNext();
+            if ($node->getElement() === $element) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function isEmpty(): bool
+    {
+        if ($this->size === 0) {
+            return true;
+        }
+        return false;
+    }
 
     public function indexOf(mixed $element): int
     {
         $node = $this->head;
         $i = 0;
+
+        if ($this->head->getNext() === null) {
+            throw new Exception();
+        }
 
         while ($i <= $this->size) {
             $node = $node->getNext();
@@ -101,12 +133,22 @@ class LinkedList implements ListInterface
         $i = 0;
         $node = $this->head->getNext();
 
+        if ($this->head->getNext() === null) {
+            throw new Exception();
+        }
+
         if ($index <= $this->size) {
             while ($index !== $i) {
+                $previousNode = $node;
                 $node = $node->getNext();
                 $i++;
             }
-            $node->setNext(null);
+            $nextNode = $node->getNext();
+            if (isset($previousNode)) {
+                $previousNode->setNext($nextNode);
+            }
+
+            $node->setNext($nextNode);
             $this->size--;
         } else {
             throw new Exception();

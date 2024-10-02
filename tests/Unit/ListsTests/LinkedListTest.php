@@ -94,11 +94,11 @@ describe('LinkedList', function () {
 
     it('should push and remove 100 elements', function () {
         $list = new \Opmvpc\StructuresDonnees\Lists\LinkedList();
-        for ($i = 0; $i < 100; ++$i) {
+        for ($i = 0; $i < 100; $i++) {
             $list->push($i);
         }
         expect($list->size())->toBe(100);
-        for ($i = 0; $i < 100; ++$i) {
+        for ($i = 0; $i < 100; $i++) {
             $list->remove(0);
         }
         expect($list->size())->toBe(0);
@@ -176,5 +176,4 @@ describe('LinkedList', function () {
         expect($list->get(1))->toBe(4);
         expect($list->get(2))->toBe(5);
     });
-
 });
